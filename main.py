@@ -20,12 +20,12 @@ from models.simsiam_model import SimSiamModel
 
 # from datasets.datasets import Dataset,build_dataset
 
-
+datetime.datetime.U
 def main():
 
     wandb_logger = WandbLogger(project='vit-self-train',
                                entity='dcastf01',
-                               name=str(datetime.datetime.now()),
+                               name=datetime.datetime.utcnow().strftime("%Y-%m-%d %X"),
                             #    offline=True, #to debug
                                )
     
