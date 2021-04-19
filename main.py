@@ -5,20 +5,22 @@ import pytorch_lightning as pl
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import wandb
+from pytorch_lightning.callbacks.model_checkpoint import ModelCheckpoint
 from pytorch_lightning.loggers import WandbLogger
 
-from config import CONFIG#,ModelCfg
-from datasets.datasets import Dataset,build_dataset,get_dataset
-# from datasets.datasets import Dataset,build_dataset
-
-from models.simsiam.pl_system_simsiam import PLSystemSimSiam
-
+import wandb
+from config import CONFIG  # ,ModelCfg
+from datasets.datasets import Dataset, build_dataset, get_dataset
 # from models.vt.vit import CONFIGS_VIT,VisionTransformer
 # from models.vt.configs import ConfigsVit
 from models.simsiam.callback import KnnMonitorInsertWandb
+from models.simsiam.pl_system_simsiam import PLSystemSimSiam
 # from models.build_model import get_model
 from models.simsiam_model import SimSiamModel
+
+# from datasets.datasets import Dataset,build_dataset
+
+
 def main():
 
     wandb_logger = WandbLogger(project='vit-self-train',
@@ -41,9 +43,9 @@ def main():
                                       
                                       )
     checkpoint_callback = ModelCheckpoint(
-        monitor='val_loss',
+        monitor='train_loss',
         dirpath=CONFIG.PATH_CHECKPOINT,
-        filename='SQUEEZENET-{epoch:02d}-{val_loss:.2f}',
+        filename='TransformerSimsiamGeneral-{epoch:02d}-{val_loss:.2f}',
         mode="min",
         save_last=True,
         save_top_k=3,
@@ -71,6 +73,16 @@ def main():
     
     #probar la parte linear del problema
     system.eval()
+    
+    checkpoint_callback = ModelCheckpoint(
+        monitor='train_loss',
+        dirpath=CONFIG.PATH_CHECKPOINT,
+        filename='TransformerSimsiamClassifier-{epoch:02d}-{val_loss:.2f}',
+        mode="min",
+        save_last=True,
+        save_top_k=3,
+                        )
+    
     classifier = Classifier(system.model)
     trainer = pl.Trainer(logger=wandb_logger,
                        gpus=-1,
@@ -82,14 +94,16 @@ def main():
                        log_gpu_memory=True,
                        callbacks=[
                             # early_stopping ,
-                            # checkpoint_callback,
+                            checkpoint_callback,
                             # knn_monitor
                                   ]
                             )
+    
+    
     trainer.fit(
         classifier,
-        dataloader_train_classifier,
-        dataloader_test
+        train_classifier_loader,
+        test_loader
                     )
     
         
