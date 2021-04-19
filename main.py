@@ -21,7 +21,7 @@ from models.simsiam.callback import KnnMonitorInsertWandb
 from models.simsiam_model import SimSiamModel
 def main():
 
-    wandb_logger = WandbLogger(project='vit-applications',
+    wandb_logger = WandbLogger(project='vit-self-train',
                                entity='dcastf01',
                                name=str(datetime.datetime.now()),
                             #    offline=True, #to debug
