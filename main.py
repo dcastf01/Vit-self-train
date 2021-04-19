@@ -14,7 +14,7 @@ from datasets.datasets import Dataset, build_dataset, get_dataset
 # from models.vt.vit import CONFIGS_VIT,VisionTransformer
 # from models.vt.configs import ConfigsVit
 from models.simsiam.callback import KnnMonitorInsertWandb
-from models.simsiam.pl_system_simsiam import PLSystemSimSiam,
+from models.simsiam.pl_system_simsiam import PLSystemSimSiam
 # from models.build_model import get_model
 from models.simsiam_model import SimSiamModel,Classifier
 
