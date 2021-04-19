@@ -40,6 +40,14 @@ def main():
     knn_monitor=KnnMonitorInsertWandb( train_loader,test_loader,
                                       
                                       )
+    checkpoint_callback = ModelCheckpoint(
+        monitor='val_loss',
+        dirpath=CONFIG.PATH_CHECKPOINT,
+        filename='SQUEEZENET-{epoch:02d}-{val_loss:.2f}',
+        mode="min",
+        save_last=True,
+        save_top_k=3,
+                        )
     # backbone=VisionTransformer(config, args.img_size, zero_head=True, num_classes=num_classes)
     # config_cfg=ModelCfg()
     # model=get_model(config_cfg)
@@ -53,11 +61,11 @@ def main():
                     #    limit_val_batches=1, #only to debug
                     #    val_check_interval=1,
                        log_gpu_memory=True,
-                    #    callbacks=[
+                       callbacks=[
                     #         # early_stopping ,
-                    #         # checkpoint_callback,
+                            checkpoint_callback,
                     #         # knn_monitor
-                    #               ]
+                                  ]
                        )
     trainer.fit(system,train_loader)
     
