@@ -14,9 +14,9 @@ from datasets.datasets import Dataset, build_dataset, get_dataset
 # from models.vt.vit import CONFIGS_VIT,VisionTransformer
 # from models.vt.configs import ConfigsVit
 from models.simsiam.callback import KnnMonitorInsertWandb
-from models.simsiam.pl_system_simsiam import PLSystemSimSiam
+from models.simsiam.pl_system_simsiam import PLSystemSimSiam,
 # from models.build_model import get_model
-from models.simsiam_model import SimSiamModel
+from models.simsiam_model import SimSiamModel,Classifier
 
 # from datasets.datasets import Dataset,build_dataset
 
@@ -45,7 +45,7 @@ def main():
     checkpoint_callback = ModelCheckpoint(
         monitor='train_loss',
         dirpath=CONFIG.PATH_CHECKPOINT,
-        filename='TransformerSimsiamGeneral-{epoch:02d}-{val_loss:.2f}',
+        filename='TransformerSimsiamGeneral-{epoch:02d}-{val_loss:.4f}',
         mode="min",
         save_last=True,
         save_top_k=3,
