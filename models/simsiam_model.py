@@ -58,11 +58,11 @@ class Classifier(pl.LightningModule):
     
         
 
-    def __init__(self, model):
+    def __init__(self, model,max_epochs):
         super().__init__()
         # create a moco based on ResNet
         self.model = model
-
+        self.max_epochs=max_epochs
         # freeze the layers of moco
         for p in self.model.parameters():  # reset requires_grad
             p.requires_grad = False
@@ -106,5 +106,5 @@ class Classifier(pl.LightningModule):
 
     def configure_optimizers(self):
         optim = torch.optim.SGD(self.fc.parameters(), lr=30.)
-        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optim, max_epochs)
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optim, self.max_epochs)
         return [optim], [scheduler]
