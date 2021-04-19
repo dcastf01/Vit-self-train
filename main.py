@@ -24,7 +24,7 @@ def main():
     wandb_logger = WandbLogger(project='vit-applications',
                                entity='dcastf01',
                                name=str(datetime.datetime.now()),
-                               offline=True, #to debug
+                            #    offline=True, #to debug
                                )
     
     # get dataloaders for training and testing

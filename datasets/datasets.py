@@ -93,7 +93,7 @@ def build_dataset(dataset, batch_size):
                                 collate_fn=collate_fn,
                                 pin_memory=True,
                                 drop_last=True,
-                                num_workers=0)
+                                num_workers=4)
     
     train_classifier_loader =\
         torch.utils.data.DataLoader(
@@ -101,7 +101,7 @@ def build_dataset(dataset, batch_size):
                                 batch_size=batch_size,
                                 shuffle=True,
                                 drop_last=True,
-                                num_workers=0
+                                num_workers=4
                                  )
         
     test_loader = \
@@ -110,7 +110,7 @@ def build_dataset(dataset, batch_size):
                                     shuffle=True,
                                     pin_memory=True,
                                     drop_last=True,
-                                    num_workers=0)
+                                    num_workers=4)
         
         
 
