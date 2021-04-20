@@ -20,7 +20,6 @@ from models.simsiam_model import SimSiamModel,Classifier
 
 # from datasets.datasets import Dataset,build_dataset
 
-datetime.datetime.U
 def main():
 
     wandb_logger = WandbLogger(project='vit-self-train',
@@ -55,6 +54,12 @@ def main():
     # model=get_model(config_cfg)
     
     system=SimSiamModel(img_size=32) 
+    exist_checkpoint=False
+    
+    if exist_checkpoint: 
+      checkpoint_path=None
+      system.load_from_checkpoint(checkpoint_path)
+    
     trainer=pl.Trainer(logger=wandb_logger,
                        gpus=-1,
                        max_epochs=CONFIG.NUM_EPOCHS,
@@ -83,7 +88,7 @@ def main():
         save_top_k=3,
                         )
     
-    classifier = Classifier(system.model)
+    classifier = Classifier(system.model,CONFIG.NUM_EPOCHS)
     trainer = pl.Trainer(logger=wandb_logger,
                        gpus=-1,
                        max_epochs=CONFIG.NUM_EPOCHS,

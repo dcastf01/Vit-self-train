@@ -65,6 +65,12 @@ def build_dataset(dataset, batch_size):
                                          transform=None,
                                          download=True
                                          )
+        train_classifier_dataset = datasets.CIFAR10(root='/tmp/data/',
+                                         train=True,
+                                         transform=None,
+                                         download=True
+                                         )
+        
         
         test_dataset = datasets.CIFAR10(root='/tmp/data/',
                                         train=False,
@@ -77,7 +83,7 @@ def build_dataset(dataset, batch_size):
                                                                      transform=None #we use collate_fn
                                                                      )
         train_classifier_dataset=\
-            lightly.data.LightlyDataset.from_torch_dataset(dataset=train_dataset,
+            lightly.data.LightlyDataset.from_torch_dataset(dataset=train_classifier_dataset,
                                                                      transform=train_linearclassifier_transform
                                                                      )
         test_dataset=\
