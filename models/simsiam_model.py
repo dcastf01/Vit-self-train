@@ -15,17 +15,17 @@ class SimSiamModel(BenchmarkModule):
         super().__init__(dataloader_kNN)
         # create a ResNet backbone and remove the classification head
         vit=VisionTransformerGenerator( img_size=img_size )
-        backbone=nn.Sequential(*list(vit.children())[:-1],
+        self.backbone=nn.Sequential(*list(vit.children())[:-1],
                             #    nn.AdaptiveAvgPool2d(1),
                                )
         # resnet = lightly.models.ResNetGenerator('resnet-18')
-        # backbone = nn.Sequential(
+        # self.backbone = nn.Sequential(
         #     *list(resnet.children())[:-1],
         #     nn.AdaptiveAvgPool2d(1),
         # )
         # create a simsiam model based on ResNet
         self.model = \
-            lightly.models.SimSiam(backbone, num_ftrs=768, num_mlp_layers=2)
+            lightly.models.SimSiam(self.backbone, num_ftrs=768, num_mlp_layers=2)
         self.criterion = lightly.loss.SymNegCosineSimilarityLoss()
         self.metric=MetricCollection({"CollapseLevel":CollapseLevel()})
     def forward(self, x):
