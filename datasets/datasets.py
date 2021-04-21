@@ -67,14 +67,14 @@ def build_dataset(dataset, batch_size):
                                          )
         train_classifier_dataset = datasets.CIFAR10(root='/tmp/data/',
                                          train=True,
-                                         transform=None,
+                                         transform=train_linearclassifier_transform,
                                          download=True
                                          )
         
         
         test_dataset = datasets.CIFAR10(root='/tmp/data/',
                                         train=False,
-                                        transform=None,
+                                        transform=test_transform,
                                         download=True
                                         )
         
@@ -84,11 +84,11 @@ def build_dataset(dataset, batch_size):
                                                                      )
         train_classifier_dataset=\
             lightly.data.LightlyDataset.from_torch_dataset(dataset=train_classifier_dataset,
-                                                                     transform=train_linearclassifier_transform
+                                                                     transform=None,#train_linearclassifier_transform
                                                                      )
         test_dataset=\
             lightly.data.LightlyDataset.from_torch_dataset(dataset=test_dataset,
-                                                                     transform=test_transform
+                                                                     transform=None#test_transform
                                                                      )
         
         
@@ -99,7 +99,7 @@ def build_dataset(dataset, batch_size):
                                 collate_fn=collate_fn,
                                 pin_memory=True,
                                 drop_last=True,
-                                num_workers=4)
+                                num_workers=0)
     
     train_classifier_loader =\
         torch.utils.data.DataLoader(
@@ -107,16 +107,16 @@ def build_dataset(dataset, batch_size):
                                 batch_size=batch_size,
                                 shuffle=True,
                                 drop_last=True,
-                                num_workers=4
+                                num_workers=0
                                  )
         
     test_loader = \
         torch.utils.data.DataLoader(dataset=test_dataset,
                                     batch_size=batch_size,
-                                    shuffle=True,
+                                    shuffle=False,
                                     pin_memory=True,
                                     drop_last=True,
-                                    num_workers=4)
+                                    num_workers=0)
         
         
 

@@ -24,10 +24,10 @@ class CONFIG:
     NUM_WORKERS:int = 0
     SEED:int=1
     IMG_SIZE:int=224
-    NUM_EPOCHS :int= 50
+    NUM_EPOCHS :int= 800
     LOAD_MODEL :bool= True
     SAVE_MODEL :bool= True
-    PATH_CHECKPOINT: str= os.path.join(ROOT_WORKSPACE,"classification/model/checkpoint")
+    PATH_CHECKPOINT: str= os.path.join(ROOT_WORKSPACE,"models/checkpoints")
     
 
     

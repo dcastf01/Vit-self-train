@@ -117,3 +117,6 @@ dmypy.json
 
 #wandb
 wandb/
+models/checkpoints/
+data/
+lightning_logs/
