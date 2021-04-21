@@ -52,7 +52,7 @@ def main():
    checkpoint_callback = ModelCheckpoint(
       monitor='train_loss_ssl',
       dirpath=CONFIG.PATH_CHECKPOINT,
-      filename='testresnetSimsiamGeneral-{epoch:02d}-{val_loss:.6f}',
+      filename='TransformerSimsiamGeneral-{epoch:02d}-{val_loss:.6f}',
       mode="min",
       save_last=True,
       save_top_k=3,
